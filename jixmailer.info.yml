@@ -1,0 +1,7 @@
+name: JIX Mailer
+type: module
+description: 'This module handles custom mailing services.'
+package: 'JIR Custom Modules'
+core: 8.x
+
+version: '8.x-1.0'

@@ -1,0 +1,50 @@
+<?php
+/**
+* @file
+* A description of what your module does.
+*/
+
+use Drupal\Core\Entity\EntityInterface;
+use \Drupal\node\NodeInterface;
+use \Drupal\Core\Entity\t;
+
+/**
+ * Implements hook_mail().
+ */
+function jixmailer_mail($key, &$message, $params){
+    $options = array(
+        'langcode' => $message['langcode'],
+    );
+
+    switch ($key){
+        case 'create_job':
+            $message['from'] = Drupal::config('system.site')->get('mail');
+            $message['subject'] = t('Une offre a été créée: @title', array('@title' => $params['node_title']), $options);
+            $message['body'][] = $params['message'];
+            break;
+    }
+
+}
+
+/**
+ * Implements hook_entity_insert().
+ */
+function jixmailer_entity_insert(EntityInterface $entity){
+    if (!$entity instanceof NodeInterface || $entity->bundle() !== 'job'){
+        return;
+    }
+
+    $mailManager = Drupal::service('plugin.manager.mail');
+    $module = `jixmailer`;
+    $key = 'create_article';
+    $to = $entity->get('field_job_contact_email')->getValue();
+    $params['message'] = $entity->getTitle();
+    $params['node_title'] = $entity->label();
+    $langcode = Drupal::currentUser()->getPreferredLangcode();
+    $send = true;
+
+    $result = $mailManager->mail($module, $key, $to, $langcode, $params, NULL, $send);
+    if ($result['result'] !== true){
+        drupal_set_message(t('Le message n\'a pas été envoyé'), 'error');
+    }
+}
