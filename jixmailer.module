@@ -44,6 +44,7 @@ function jixmailer_entity_insert(EntityInterface $entity){
     $send = true;
 
     $result = $mailManager->mail($module, $key, $to, $langcode, $params, NULL, $send);
+    kint($result);
     if ($result['result'] !== true){
         drupal_set_message(t('Le message n\'a pas été envoyé'), 'error');
     }
