@@ -37,8 +37,7 @@ function jixmailer_entity_insert(EntityInterface $entity){
     $mailManager = Drupal::service('plugin.manager.mail');
     $module = `jixmailer`;
     $key = 'node_insert';
-//    $to = $entity->get('field_job_contact_email')->getValue();
-    $to = 'medard.rebero@gmail.com';
+    $to = $entity->get('field_job_contact_email')->getString();
     $params['message'] = $entity->getTitle();
     $params['node_title'] = $entity->label();
     $langcode = Drupal::languageManager()->getDefaultLanguage()->getName();
