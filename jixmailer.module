@@ -50,7 +50,7 @@ function jixmailer_entity_insert(EntityInterface $entity){
     $params['message'] = $entity->getTitle();
     $params['subject'] = $entity->label();
     $params['options']['title'] = t('Iyi ni title');
-    $params['options']['footer'] = t('Iyi ni title');
+    $params['options']['footer'] = t('Iyi ni footer');
     $langcode = Drupal::languageManager()->getDefaultLanguage()->getName();
     $result = $mailManager->mail($module, $key, $to, $langcode, $params, $reply, $send);
     if ($result['result'] !== true){
