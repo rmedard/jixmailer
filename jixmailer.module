@@ -43,8 +43,8 @@ function jixmailer_entity_insert(EntityInterface $entity){
     $langcode = Drupal::languageManager()->getDefaultLanguage()->getName();
     $send = true;
     $result = $mailManager->mail($module, $key, $to, $langcode, $params, NULL, $send);
-    //kint($result);
-    //die();
+    kint($to);
+    die();
     if ($result['result'] !== true){
         $message = t('Error sending email to @email after creation of job nid: @id', array('@email' => $to, '@id' => $entity->id()));
         drupal_set_message($message, 'error');
