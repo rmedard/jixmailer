@@ -30,7 +30,7 @@ function jixmailer_mail($key, &$message, $params){
         case 'job_published':
             $message['from'] = Drupal::config('system.site')
                     ->get('name') . ' <' . Drupal::config('system.site')->get('mail') . '>';
-            $message['subject'] = t('Votre offre d\'emploi chez @site est validée', [
+            $message['subject'] = t('Votre offre d\'emploi chez @site est publié', [
                 '@site' => Drupal::config('system.site')->get('name'),
             ], $options);
             $message['body'][] = $params['message'];
