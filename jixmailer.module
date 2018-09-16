@@ -6,7 +6,6 @@
 
 use Drupal\Core\Entity\EntityInterface;
 use \Drupal\node\NodeInterface;
-use \Drupal\Core\Entity\t;
 
 /**
  * Implements hook_mail().
@@ -28,8 +27,15 @@ function jixmailer_mail($key, &$message, $params){
                 }
             }
             break;
+        case 'job_published':
+            $message['from'] = Drupal::config('system.site')
+                    ->get('name') . ' <' . Drupal::config('system.site')->get('mail') . '>';
+            $message['subject'] = t('Votre offre d\'emploi chez @site est validée', [
+                '@site' => Drupal::config('system.site')->get('name'),
+            ], $options);
+            $message['body'][] = $params['message'];
+            break;
     }
-
 }
 
 /**
