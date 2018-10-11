@@ -4,9 +4,6 @@
 * A description of what your module does.
 */
 
-use Drupal\Core\Entity\EntityInterface;
-use \Drupal\node\NodeInterface;
-
 /**
  * Implements hook_mail().
  */
@@ -40,6 +37,14 @@ function jixmailer_mail($key, &$message, $params){
                 ->get('name') . ' <' . Drupal::config('system.site')->get('mail') . '>';
             $message['subject'] = t('Nouvelle annonce soumise sur @site', [
               '@site' => Drupal::config('system.site')->get('name'),
+            ], $options);
+            $message['body'][] = $params['message'];
+            break;
+        case 'job_created_user':
+            $message['from'] = Drupal::config('system.site')
+                    ->get('name') . ' <' . Drupal::config('system.site')->get('mail') . '>';
+            $message['subject'] = t('Nouvelle annonce reçu sur @site', [
+                '@site' => Drupal::config('system.site')->get('name'),
             ], $options);
             $message['body'][] = $params['message'];
             break;
