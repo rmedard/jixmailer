@@ -48,5 +48,13 @@ function jixmailer_mail($key, &$message, $params){
             ], $options);
             $message['body'][] = $params['message'];
             break;
+        case 'employer_created':
+            $message['from'] = Drupal::config('system.site')
+                    ->get('name') . ' <' . Drupal::config('system.site')->get('mail') . '>';
+            $message['subject'] = t('Nouvel employeur reçu sur @site', [
+                '@site' => Drupal::config('system.site')->get('name'),
+            ], $options);
+            $message['body'][] = $params['message'];
+            break;
     }
 }
